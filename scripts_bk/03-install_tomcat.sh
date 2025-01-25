@@ -3,9 +3,9 @@
 set -e
 
 # Variables
-TOMCAT_USER=root
-TOMCAT_GROUP=root
-TOMCAT_HOME=/home/root/tomcat
+TOMCAT_USER=ubuntu
+TOMCAT_GROUP=ubuntu
+TOMCAT_HOME=/home/ubuntu/tomcat
 
 # Function to fetch the latest Tomcat version
 fetch_latest_version() {
@@ -49,7 +49,7 @@ Environment="CATALINA_HOME=$TOMCAT_HOME"
 Environment="CATALINA_BASE=$TOMCAT_HOME"
 Environment="CATALINA_OPTS=-Xms2048M -Xmx3072M -server -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
 Environment="JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom"
-Environment="JAVA_TOOL_OPTIONS=-Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/home/root/keystore/metadata-keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede"
+Environment="JAVA_TOOL_OPTIONS=-Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/home/ubuntu/keystore/metadata-keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede"
 
 ExecStart=$TOMCAT_HOME/bin/startup.sh
 ExecStop=$TOMCAT_HOME/bin/shutdown.sh

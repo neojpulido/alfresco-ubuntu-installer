@@ -6,33 +6,33 @@ echo "Install unzip command"
 sudo apt -y install unzip
 
 echo "Create support folders and configuration in Tomcat"
-mkdir -p /home/ubuntu/tomcat/shared/classes && mkdir -p /home/ubuntu/tomcat/shared/lib
-sed -i 's|^shared.loader=$|shared.loader=${catalina.base}/shared/classes,${catalina.base}/shared/lib/*.jar|' /home/ubuntu/tomcat/conf/catalina.properties
+mkdir -p /home/root/tomcat/shared/classes && mkdir -p /home/root/tomcat/shared/lib
+sed -i 's|^shared.loader=$|shared.loader=${catalina.base}/shared/classes,${catalina.base}/shared/lib/*.jar|' /home/root/tomcat/conf/catalina.properties
 
 echo "Unzip Alfresco ZIP Distribution File"
 mkdir /tmp/alfresco
 unzip downloads/alfresco-content-services-community-distribution-23.2.1.zip -d /tmp/alfresco
 
 echo "Copy JDBC driver"
-cp /tmp/alfresco/web-server/lib/postgresql-42.6.0.jar /home/ubuntu/tomcat/shared/lib/
+cp /tmp/alfresco/web-server/lib/postgresql-42.6.0.jar /home/root/tomcat/shared/lib/
 
 echo "Configure JAR Addons deployment"
-mkdir -p /home/ubuntu/modules/platform && mkdir -p /home/ubuntu/modules/share && mkdir -p /home/ubuntu/tomcat/conf/Catalina/localhost
-cp /tmp/alfresco/web-server/conf/Catalina/localhost/* /home/ubuntu/tomcat/conf/Catalina/localhost/
+mkdir -p /home/root/modules/platform && mkdir -p /home/root/modules/share && mkdir -p /home/root/tomcat/conf/Catalina/localhost
+cp /tmp/alfresco/web-server/conf/Catalina/localhost/* /home/root/tomcat/conf/Catalina/localhost/
 
 echo "Install Web Applications"
-cp /tmp/alfresco/web-server/webapps/* /home/ubuntu/tomcat/webapps/
+cp /tmp/alfresco/web-server/webapps/* /home/root/tomcat/webapps/
 
 echo "Apply configuration"
-cp -r /tmp/alfresco/web-server/shared/classes/* /home/ubuntu/tomcat/shared/classes/
-mkdir /home/ubuntu/keystore && cp -r /tmp/alfresco/keystore/* /home/ubuntu/keystore/
-mkdir /home/ubuntu/alf_data
-cat <<EOL | tee /home/ubuntu/tomcat/shared/classes/alfresco-global.properties
+cp -r /tmp/alfresco/web-server/shared/classes/* /home/root/tomcat/shared/classes/
+mkdir /home/root/keystore && cp -r /tmp/alfresco/keystore/* /home/root/keystore/
+mkdir /home/root/alf_data
+cat <<EOL | tee /home/root/tomcat/shared/classes/alfresco-global.properties
 #
 # Custom content and index data location
 #
-dir.root=/home/ubuntu/alf_data
-dir.keystore=/home/ubuntu/keystore/
+dir.root=/home/root/alf_data
+dir.keystore=/home/root/keystore/
 
 #
 # Database connection properties
@@ -75,16 +75,16 @@ share.protocol=http
 EOL
 
 echo "Apply AMPs"
-mkdir /home/ubuntu/amps && cp -r /tmp/alfresco/amps/* /home/ubuntu/amps/
-mkdir /home/ubuntu/bin && cp -r /tmp/alfresco/bin/* /home/ubuntu/bin/
-java -jar /home/ubuntu/bin/alfresco-mmt.jar install /home/ubuntu/amps /home/ubuntu/tomcat/webapps/alfresco.war -directory
-java -jar /home/ubuntu/bin/alfresco-mmt.jar list /home/ubuntu/tomcat/webapps/alfresco.war
+mkdir /home/root/amps && cp -r /tmp/alfresco/amps/* /home/root/amps/
+mkdir /home/root/bin && cp -r /tmp/alfresco/bin/* /home/root/bin/
+java -jar /home/root/bin/alfresco-mmt.jar install /home/root/amps /home/root/tomcat/webapps/alfresco.war -directory
+java -jar /home/root/bin/alfresco-mmt.jar list /home/root/tomcat/webapps/alfresco.war
 
 echo "Modify alfresco and share logs directory"
-mkdir /home/ubuntu/tomcat/webapps/alfresco && unzip /home/ubuntu/tomcat/webapps/alfresco.war -d /home/ubuntu/tomcat/webapps/alfresco
-mkdir /home/ubuntu/tomcat/webapps/share && unzip /home/ubuntu/tomcat/webapps/share.war -d /home/ubuntu/tomcat/webapps/share
-sed -i 's|^appender\.rolling\.fileName=alfresco\.log|appender.rolling.fileName=/home/ubuntu/tomcat/logs/alfresco.log|' /home/ubuntu/tomcat/webapps/alfresco/WEB-INF/classes/log4j2.properties
-sed -i 's|^appender\.rolling\.fileName=share\.log|appender.rolling.fileName=/home/ubuntu/tomcat/logs/share.log|' /home/ubuntu/tomcat/webapps/share/WEB-INF/classes/log4j2.properties
+mkdir /home/root/tomcat/webapps/alfresco && unzip /home/root/tomcat/webapps/alfresco.war -d /home/root/tomcat/webapps/alfresco
+mkdir /home/root/tomcat/webapps/share && unzip /home/root/tomcat/webapps/share.war -d /home/root/tomcat/webapps/share
+sed -i 's|^appender\.rolling\.fileName=alfresco\.log|appender.rolling.fileName=/home/root/tomcat/logs/alfresco.log|' /home/root/tomcat/webapps/alfresco/WEB-INF/classes/log4j2.properties
+sed -i 's|^appender\.rolling\.fileName=share\.log|appender.rolling.fileName=/home/root/tomcat/logs/share.log|' /home/root/tomcat/webapps/share/WEB-INF/classes/log4j2.properties
 
 
 echo "Alfresco has been configured"

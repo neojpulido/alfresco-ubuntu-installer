@@ -1,0 +1,33 @@
+1) Authentication
+===============================================
+POST http://20.123.88.118:8080/alfresco/api/-default-/public/authentication/versions/1/tickets
+
+Request Body => json:
+{
+    "userId": "admin",
+    "password": "admin"
+}
+
+Response:
+{
+    "entry": {
+        "id": "TICKET_33cdc1bc8abb20cd2c5e24d7f29b81973da6b495",
+        "userId": "admin"
+    }
+}
+
+2) Base64
+===============================================
+Conveto ticket to base64 in Mac:
+echo -n 'TICKET_33cdc1bc8abb20cd2c5e24d7f29b81973da6b495' | openssl base64
+Result: VElDS0VUXzMzY2RjMWJjOGFiYjIwY2QyYzVlMjRkN2YyOWI4MTk3M2RhNmI0OTU=
+
+
+3) Search:
+===============================================
+POST http://20.123.88.118:8080/alfresco/api/-default-/public/search/versions/1/search
+Request Header:
+Content-Type: application/json
+Authorization: Basic VElDS0VUXzMzY2RjMWJjOGFiYjIwY2QyYzVlMjRkN2YyOWI4MTk3M2RhNmI0OTU=
+
+

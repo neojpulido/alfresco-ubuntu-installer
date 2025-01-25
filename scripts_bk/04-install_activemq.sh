@@ -3,9 +3,9 @@
 set -e
 
 # Variables
-ACTIVEMQ_USER=root
-ACTIVEMQ_GROUP=root
-ACTIVEMQ_HOME=/home/root/activemq
+ACTIVEMQ_USER=ubuntu
+ACTIVEMQ_GROUP=ubuntu
+ACTIVEMQ_HOME=/home/ubuntu/activemq
 
 # Function to fetch the latest ActiveMQ version
 fetch_latest_version() {

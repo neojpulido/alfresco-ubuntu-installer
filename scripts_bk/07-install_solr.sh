@@ -5,12 +5,12 @@ set -e
 echo "Unzip SOLR ZIP Distribution File"
 mkdir /tmp/solr
 unzip downloads/alfresco-search-services-2.0.9.1.zip -d /tmp/solr
-mv /tmp/solr/alfresco-search-services /home/root
+mv /tmp/solr/alfresco-search-services /home/ubuntu
 
 # Variables
-SOLR_USER=root
-SOLR_GROUP=root
-SOLR_HOME=/home/root/alfresco-search-services
+SOLR_USER=ubuntu
+SOLR_GROUP=ubuntu
+SOLR_HOME=/home/ubuntu/alfresco-search-services
 
 echo "Creating SOLR systemd service file..."
 cat <<EOL | sudo tee /etc/systemd/system/solr.service
@@ -26,8 +26,8 @@ Group=$SOLR_GROUP
 
 Environment="JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64"
 
-ExecStart=/home/root/alfresco-search-services/solr/bin/solr start -a "-Dcreate.alfresco.defaults=alfresco,archive -Dalfresco.secureComms=secret -Dalfresco.secureComms.secret=secret"
-ExecStop=/home/root/alfresco-search-services/solr/bin/solr stop
+ExecStart=/home/ubuntu/alfresco-search-services/solr/bin/solr start -a "-Dcreate.alfresco.defaults=alfresco,archive -Dalfresco.secureComms=secret -Dalfresco.secureComms.secret=secret"
+ExecStop=/home/ubuntu/alfresco-search-services/solr/bin/solr stop
 
 [Install]
 WantedBy=multi-user.target
